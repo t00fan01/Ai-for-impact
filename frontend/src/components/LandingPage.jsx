@@ -30,7 +30,7 @@ export function LandingPage({ onStart }) {
       </button>
 
       {/* Feature Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-24 w-full text-left">
+      <div id="features" className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-24 w-full text-left">
         <div className="glass-panel p-6 hover:border-indigo-300 transition-colors">
           <div className="w-12 h-12 rounded-xl bg-indigo-100 flex items-center justify-center text-indigo-600 mb-4">
             <Target className="w-6 h-6" />

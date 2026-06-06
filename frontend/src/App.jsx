@@ -27,8 +27,8 @@ function App() {
             </span>
           </div>
           <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
-            <a href="#" className="hover:text-indigo-600 transition-colors">Features</a>
-            <a href="#" className="hover:text-indigo-600 transition-colors">How it works</a>
+            <a href="#features" className="hover:text-indigo-600 transition-colors">Features</a>
+            <button onClick={() => setStarted(true)} className="hover:text-indigo-600 transition-colors">Try it out</button>
             <button className="px-4 py-2 rounded-lg bg-slate-100 hover:bg-slate-200 transition-colors text-slate-800">
               Sign In
             </button>

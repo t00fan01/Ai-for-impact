@@ -11,6 +11,10 @@
   --color-text-muted: #64748b; /* Slate 500 */
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   @apply bg-[#f8fafc] text-[#0f172a] antialiased min-h-screen selection:bg-indigo-500/30;
 }
