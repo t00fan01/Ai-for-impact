@@ -99,5 +99,5 @@ npm run dev
 
 <div align="center">
   <b>Built for Hackathon | Built to make an Impact</b><br>
-  Crafted with ❤️ by t00fan01
+  Crafted by Team Lemon
 </div>
