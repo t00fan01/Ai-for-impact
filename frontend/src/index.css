@@ -5,25 +5,25 @@
   --color-primary-dark: #4f46e5; /* Indigo 600 */
   --color-success: #10b981; /* Emerald 500 */
   --color-danger: #f43f5e; /* Rose 500 */
-  --color-bg-dark: #0f172a; /* Slate 900 */
-  --color-bg-card: #1e293b; /* Slate 800 */
-  --color-text-main: #f8fafc; /* Slate 50 */
-  --color-text-muted: #94a3b8; /* Slate 400 */
+  --color-bg-light: #f8fafc; /* Slate 50 */
+  --color-bg-card: #ffffff; /* White */
+  --color-text-main: #0f172a; /* Slate 900 */
+  --color-text-muted: #64748b; /* Slate 500 */
 }
 
 body {
-  @apply bg-[#0f172a] text-[#f8fafc] antialiased min-h-screen selection:bg-indigo-500/30;
+  @apply bg-[#f8fafc] text-[#0f172a] antialiased min-h-screen selection:bg-indigo-500/30;
 }
 
-/* Glassmorphism Utilities */
+/* Glassmorphism Utilities (Light mode) */
 .glass-panel {
-  @apply bg-[#1e293b]/70 backdrop-blur-md border border-white/10 shadow-xl rounded-2xl;
+  @apply bg-white/70 backdrop-blur-md border border-slate-200/60 shadow-xl shadow-slate-200/50 rounded-2xl;
 }
 
 .input-field {
-  @apply w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-[#f8fafc] placeholder-[#94a3b8] focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all duration-300;
+  @apply w-full bg-white/50 border border-slate-300 rounded-xl px-4 py-3 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all duration-300;
 }
 
 .btn-primary {
-  @apply px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-400 hover:to-purple-500 text-white font-medium rounded-xl shadow-lg shadow-indigo-500/25 transition-all duration-300 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+  @apply px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-medium rounded-xl shadow-lg shadow-indigo-500/25 transition-all duration-300 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
 }
