@@ -76,7 +76,7 @@ function App() {
     <>
       <nav className="navbar">
         <div className="logo" onClick={() => { setResults(null); setShowHistory(false); window.scrollTo({top: 0, behavior: 'smooth'}); }} style={{cursor: 'pointer'}}>
-          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+          <img src="/logo.png" alt="Career Mitra Logo" style={{height: '36px', width: '36px', objectFit: 'contain', borderRadius: '8px'}} />
           Career Mitra
         </div>
         <div className="nav-links">
