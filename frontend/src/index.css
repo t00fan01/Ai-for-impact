@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #6366f1; /* Indigo 500 */
+  --color-primary-dark: #4f46e5; /* Indigo 600 */
+  --color-success: #10b981; /* Emerald 500 */
+  --color-danger: #f43f5e; /* Rose 500 */
+  --color-bg-dark: #0f172a; /* Slate 900 */
+  --color-bg-card: #1e293b; /* Slate 800 */
+  --color-text-main: #f8fafc; /* Slate 50 */
+  --color-text-muted: #94a3b8; /* Slate 400 */
+}
+
+body {
+  @apply bg-[#0f172a] text-[#f8fafc] antialiased min-h-screen selection:bg-indigo-500/30;
+}
+
+/* Glassmorphism Utilities */
+.glass-panel {
+  @apply bg-[#1e293b]/70 backdrop-blur-md border border-white/10 shadow-xl rounded-2xl;
+}
+
+.input-field {
+  @apply w-full bg-[#0f172a]/50 border border-white/10 rounded-xl px-4 py-3 text-[#f8fafc] placeholder-[#94a3b8] focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all duration-300;
+}
+
+.btn-primary {
+  @apply px-6 py-3 bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-400 hover:to-purple-500 text-white font-medium rounded-xl shadow-lg shadow-indigo-500/25 transition-all duration-300 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed;
+}
