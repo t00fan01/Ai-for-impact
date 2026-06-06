@@ -292,6 +292,7 @@ textarea {
   font-size: 2.5rem;
   font-weight: 800;
   border: 8px solid var(--border-color);
+  flex-shrink: 0;
 }
 .score-circle.high { border-color: var(--success); color: var(--success); }
 .score-circle.medium { border-color: #f59e0b; color: #f59e0b; }

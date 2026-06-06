@@ -239,8 +239,8 @@ function App() {
             )}
 
             <div className="report-card">
-              <div className="score-header" style={{flexWrap: 'wrap'}}>
-                <div style={{display: 'flex', alignItems: 'center', gap: '2rem'}}>
+              <div className="score-header" style={{flexWrap: 'wrap', gap: '2rem'}}>
+                <div style={{display: 'flex', alignItems: 'center', gap: '2rem', flex: '1 1 min-content'}}>
                   <div className={`score-circle ${getScoreClass(results.match_score)}`}>
                     {results.match_score}%
                   </div>
@@ -250,9 +250,9 @@ function App() {
                   </div>
                 </div>
 
-                <div style={{marginLeft: 'auto', background: 'var(--bg-color)', padding: '1rem 1.5rem', borderRadius: '8px', border: '1px solid var(--border-color)'}}>
-                  <h4 style={{margin: '0 0 0.5rem 0', color: 'var(--text-main)'}}>Fake Job Detection</h4>
-                  <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 'bold', color: results.scam_probability_score > 40 ? 'var(--danger)' : 'var(--success)'}}>
+                <div style={{background: 'var(--bg-color)', padding: '1.25rem 2rem', borderRadius: '12px', border: '1px solid var(--border-color)', minWidth: '250px'}}>
+                  <h4 style={{margin: '0 0 0.5rem 0', color: 'var(--text-main)', fontSize: '1.1rem'}}>Fake Job Detection</h4>
+                  <div style={{display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 'bold', fontSize: '1.1rem', color: results.scam_probability_score > 40 ? 'var(--danger)' : 'var(--success)'}}>
                     {results.scam_probability_score > 40 ? '⚠️ High Risk' : '✅ Safe'}
                     <span style={{color: 'var(--text-muted)', fontWeight: 'normal', fontSize: '0.9rem'}}>({results.scam_probability_score}% Scam Probability)</span>
                   </div>
