@@ -1,100 +1,99 @@
-# CareerMitra AI - Resume to Job Analyzer + Scam Detector
+# CareerMitra — AI Employability Toolkit
 
-CareerMitra AI is a full-stack AI for Employability project built for hackathon execution speed and demo reliability.
+CareerMitra is an AI-driven web application that evaluates candidate resumes against job descriptions, highlights missing skills, flags potential job scams, and provides actionable, prioritized study recommendations.
 
-It helps job seekers:
-- Evaluate resume-job fit.
-- Detect potential scam signals in job descriptions.
-- Identify missing skills.
-- Generate actionable study recommendations.
-- Export a polished PDF report.
+This repository contains:
+- `backend/`: FastAPI service with AI integration
+- `frontend/`: React + Vite UX
 
-## Tech Stack
-- Frontend: React + Vite + Tailwind CSS
-- Backend: FastAPI
-- AI: Gemini via `google-generativeai`
-- PDF Parsing: PyPDF2
+Why this project
+- Rapid, structured feedback for jobseekers
+- Exportable analysis for interviews and coaching
+- Extensible design for production readiness
 
-## Key Features
-- Resume-to-JD analysis with strict structured JSON output.
-- Scam probability scoring and red flag explanations.
-- Skill gap detection and study plan generation.
-- URL-based JD extraction pipeline (`/parse-job-url`).
-- Guest auth session flow (`/auth/guest-login`, `/auth/me`).
-- Local analysis history in browser.
-- One-click PDF export from results view.
-
-## Project Structure
-- `backend/` FastAPI app, AI logic, URL parser endpoints.
-- `frontend/` React app, dashboard, results, export UX.
-
-## Prerequisites
-- Python 3.11+
-- Node.js 20+
-- Gemini API key
-
-## Environment
-Create backend env values (example already included):
-- `backend/.env.example`
-
-Set on shell before backend startup:
-- `GEMINI_API_KEY=...`
-- Optional: `GEMINI_MODEL=gemini-1.5-flash`
-
-## Local Run
-### 1) Backend
-```bash
-cd backend
-python -m venv .venv
-# Windows PowerShell:
-.\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-$env:GEMINI_API_KEY="your_api_key_here"
-uvicorn main:app --reload --host 0.0.0.0 --port 8000
+Repository layout
+```
+CareerMitra/
+├─ backend/                # FastAPI application and tests
+├─ frontend/               # React + Vite application
+├─ .github/workflows/      # CI workflows
+├─ LICENSE
+└─ README.md
 ```
 
-### 2) Frontend
+Quick start (development)
+
+Prerequisites
+- Python 3.11 (pyenv recommended)
+- Node.js 18+ and npm
+
+Backend (macOS / zsh)
+
+```bash
+cd backend
+python3.11 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip setuptools wheel
+pip install -r requirements.txt
+# Add your Gemini API key to backend/.env or export GEMINI_API_KEY in your shell
+uvicorn main:app --host 127.0.0.1 --port 8000 --reload
+```
+
+Visit the health endpoint: http://127.0.0.1:8000/health
+
+Frontend
+
 ```bash
 cd frontend
 npm install
-# Optional if backend URL differs:
-# setx VITE_API_URL "http://127.0.0.1:8000"
 npm run dev
 ```
 
-## API Endpoints
-- `GET /` backend status message
-- `GET /health` health check + model/config visibility
-- `POST /auth/guest-login` create guest session
-- `GET /auth/me` validate active session (requires `X-Session-Token`)
-- `POST /auth/logout` invalidate session (requires `X-Session-Token`)
-- `POST /parse-job-url` fetch + parse JD content from URL (requires `X-Session-Token`)
-- `POST /analyze` run resume/JD analysis (requires `X-Session-Token`)
+Vite will print the local dev URL (for example http://localhost:5174).
 
-## Frontend Build Commands
-```bash
-cd frontend
-npm run lint
-npm run build
-npm run preview
+API summary
+- GET /health — { status, gemini_configured, model }
+- POST /auth/guest-login — create guest session
+- POST /parse-job-url — extract JD from URL
+- POST /analyze — multipart/form-data: job_description + resume (PDF). Header: X-Session-Token
+- POST /analyze/demo — quick demo using raw resume text
+- GET /analysis/export — return last analysis for session
+- GET /models — best-effort list of available models
+
+AnalysisResponse (returned by /analyze)
+```json
+{
+  "match_score": 0,
+  "scam_probability_score": 0,
+  "scam_red_flags": ["string"],
+  "missing_skills": ["string"],
+  "study_recommendations": ["string"]
+}
 ```
 
-## CI
-GitHub Actions workflow added at:
-- `.github/workflows/ci.yml`
+Environment variables
+- GEMINI_API_KEY — required for AI features (set in `backend/.env` or export in shell)
+- GEMINI_MODEL — optional (defaults to `gemini-pro`)
 
-It runs:
-- Backend dependency install + syntax compile check
-- Frontend install + lint + build
+Testing
 
-## GitHub Readiness Checklist
-- [x] Root README with architecture and setup
-- [x] License file
-- [x] Backend env example
-- [x] Hardened `.gitignore`
-- [x] CI workflow for backend/frontend
-- [x] Reproducible dependency entrypoints
+```bash
+cd backend
+source .venv/bin/activate
+pytest
+```
 
-## Notes
-- Backend sessions are in-memory (sufficient for hackathon/demo).
-- For production, migrate sessions and analysis history to a persistent store.
+Continuous Integration
+
+A GitHub Actions workflow is included to run backend tests and build the frontend on pushes and pull requests. See `.github/workflows/ci.yml`.
+
+Migration & production
+- Migrate in-memory cache and sessions to Redis for production.
+- Replace `google-generativeai` with `google-genai`.
+- Replace `PyPDF2` with `pypdf` to avoid deprecation warnings.
+
+Contributing
+
+Open issues for bugs or feature requests. For code changes, create a PR and ensure tests pass.
+
+If you'd like, I can add CONTRIBUTING.md, a Dockerfile, or a deploy pipeline next — tell me which and I'll implement it.
