@@ -394,3 +394,34 @@ footer {
   padding: 2rem;
   margin-top: 4rem;
 }
+
+/* History Section */
+.history-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+.history-card {
+  background: white;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.history-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary);
+}
+.score-badge {
+  font-weight: 800;
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  background: var(--bg-color);
+}
+.score-badge.high { color: var(--success); }
+.score-badge.medium { color: #f59e0b; }
+.score-badge.low { color: var(--danger); }

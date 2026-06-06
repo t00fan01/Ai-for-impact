@@ -9,6 +9,12 @@ function App() {
   const [results, setResults] = useState(null)
   const [error, setError] = useState(null)
 
+  const [history, setHistory] = useState(() => {
+    const saved = localStorage.getItem('careerMitraHistory')
+    return saved ? JSON.parse(saved) : []
+  })
+  const [showHistory, setShowHistory] = useState(false)
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (!file || (!jobDescription && !jobDescriptionFile)) {
@@ -41,6 +47,18 @@ function App() {
 
       const data = await response.json()
       setResults(data)
+
+      const historyItem = {
+        id: Date.now(),
+        date: new Date().toLocaleString(),
+        jobSnippet: jobDescription ? jobDescription.substring(0, 40) + '...' : (jobDescriptionFile ? jobDescriptionFile.name : 'Job Description'),
+        match_score: data.match_score,
+        data: data
+      }
+      const newHistory = [historyItem, ...history]
+      setHistory(newHistory)
+      localStorage.setItem('careerMitraHistory', JSON.stringify(newHistory))
+
     } catch (err) {
       setError(err.message)
     } finally {
@@ -57,22 +75,47 @@ function App() {
   return (
     <>
       <nav className="navbar">
-        <div className="logo" onClick={() => { setResults(null); window.scrollTo({top: 0, behavior: 'smooth'}); }} style={{cursor: 'pointer'}}>
+        <div className="logo" onClick={() => { setResults(null); setShowHistory(false); window.scrollTo({top: 0, behavior: 'smooth'}); }} style={{cursor: 'pointer'}}>
           <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
           Career Mitra
         </div>
         <div className="nav-links">
-          <span onClick={() => alert("Magic Resume Editor is coming soon!")}>Magic Resume Editor</span>
+          <span onClick={() => { setResults(null); setShowHistory(true); window.scrollTo(0,0); }}>History</span>
+          <span onClick={() => alert("Magic Resume Editor is coming soon!")}>Magic Editor</span>
           <span onClick={() => alert("Career Mitra is 100% Free!")}>Pricing</span>
           <span onClick={() => document.getElementById('faq')?.scrollIntoView({behavior: 'smooth'})}>FAQ</span>
         </div>
         <div className="nav-buttons">
-          <button onClick={() => { setResults(null); window.scrollTo({top: 0, behavior: 'smooth'}); }}>Scan your Resume</button>
+          <button onClick={() => { setResults(null); setShowHistory(false); window.scrollTo({top: 0, behavior: 'smooth'}); }}>Scan your Resume</button>
         </div>
       </nav>
 
       <div className="container">
-        {!results && !loading && (
+        {showHistory && !results && !loading && (
+          <div className="history-container">
+            <div className="results-header">
+              <h2>Your Past Scans</h2>
+              <button className="reset-btn" onClick={() => setShowHistory(false)}>← Back to Scanner</button>
+            </div>
+            {history.length === 0 ? (
+              <p style={{color: 'var(--text-muted)'}}>No past scans found yet. Scan a resume to see it here!</p>
+            ) : (
+              <div className="history-grid">
+                {history.map((item) => (
+                  <div key={item.id} className="history-card" onClick={() => { setResults(item.data); setShowHistory(false); }}>
+                    <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
+                      <h4 style={{margin: '0 0 0.5rem 0', color: 'var(--primary)'}}>{item.jobSnippet}</h4>
+                      <div className={`score-badge ${getScoreClass(item.match_score)}`}>{item.match_score}%</div>
+                    </div>
+                    <p style={{margin: 0, fontSize: '0.85rem', color: 'var(--text-muted)'}}>{item.date}</p>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {!showHistory && !results && !loading && (
           <>
             <div className="hero">
               <h1>🚀 Get Hired Faster with <span>Career Mitra!</span></h1>
@@ -261,7 +304,7 @@ function App() {
         )}
       </div>
       
-      {!loading && !results && (
+      {!showHistory && !loading && !results && (
         <div id="faq" className="container" style={{paddingTop: '2rem', paddingBottom: '4rem'}}>
           <div className="features-header" style={{marginTop: '2rem', textAlign: 'center'}}>
             <h2>Frequently Asked Questions <span>(FAQ)</span></h2>
@@ -288,7 +331,7 @@ function App() {
         </div>
       )}
 
-      {!loading && !results && (
+      {!showHistory && !loading && !results && (
         <footer>
           <p>© 2026 Career Mitra. Built for Hackathon.</p>
         </footer>
