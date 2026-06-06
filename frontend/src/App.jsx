@@ -104,7 +104,7 @@ function App() {
                 {history.map((item) => (
                   <div key={item.id} className="history-card" onClick={() => { setResults(item.data); setShowHistory(false); }}>
                     <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
-                      <h4 style={{margin: '0 0 0.5rem 0', color: 'var(--primary)'}}>{item.jobSnippet}</h4>
+                      <h4 style={{margin: '0 1rem 0.5rem 0', color: 'var(--primary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', minWidth: 0}} title={item.jobSnippet}>{item.jobSnippet}</h4>
                       <div className={`score-badge ${getScoreClass(item.match_score)}`}>{item.match_score}%</div>
                     </div>
                     <p style={{margin: 0, fontSize: '0.85rem', color: 'var(--text-muted)'}}>{item.date}</p>
